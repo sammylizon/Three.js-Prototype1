@@ -14,24 +14,42 @@ const controls = new OrbitControls(camera, renderer.domElement);
 const loader = new GLTFLoader();
 
 // Create a cube and add it to the scene
-const geometry = new THREE.BoxGeometry(1, 2, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x808080 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+const boxMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 2, 1), 
+        new THREE.MeshBasicMaterial({ color: 0x808080 })
+    );
+
+//Creating a sphere and adding to the scene
+const sphereMesh = new THREE.Mesh(
+        new THREE.SphereGeometry(1, 22, 16, 0, 6.28318, 0, 3.14159), 
+        new THREE.MeshBasicMaterial({ color: 0x808080 })
+    );
+
+const planeMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 2, 1), 
+        new THREE.MeshBasicMaterial({ color: 0x808080 })
+    );
 
 function RotateObject(obj){
-    obj.rotation.x += 0.05;
+    obj.rotation.x += 0.01;
     obj.rotation.y += 0.01;
 };
+
+//Adding to scene
+scene.add(boxMesh, sphereMesh);
 
 
 
 // Set the camera position
 camera.position.z = 5;
 
+//positions
+boxMesh.position.x = 2;
+
 // Animation loop
 function animate() {
-    // RotateObject(cube);
+    RotateObject(boxMesh);
+    RotateObject(sphereMesh);
     controls.update(); // Update controls if needed
     renderer.render(scene, camera);
 }
